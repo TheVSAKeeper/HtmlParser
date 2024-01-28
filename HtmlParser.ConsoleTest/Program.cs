@@ -23,7 +23,7 @@ internal static class Program
         JsonSerializerOptions options = new()
         {
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-            WriteIndented = true,
+            WriteIndented = true
         };
 
         foreach (DiseasesClass diseasesClass in enumerable)
@@ -37,9 +37,10 @@ internal static class Program
 
     public static void Main()
     {
-        Parser.Settings = new Mkb10Settings(1, 1);
+        Parser.Settings = new Mkb10Settings();
         Parser.Start();
 
         Console.ReadLine();
+        Parser.Abort();
     }
 }

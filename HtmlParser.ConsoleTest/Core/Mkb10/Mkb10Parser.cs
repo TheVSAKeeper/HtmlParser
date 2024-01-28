@@ -5,86 +5,69 @@ namespace HtmlParser.ConsoleTest.Core.Mkb10;
 
 internal class Mkb10Parser : IParser<IEnumerable<DiseasesClass>>
 {
+    private const StringSplitOptions SplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
+
     public IEnumerable<DiseasesClass> Parse(IHtmlDocument document)
     {
-        IEnumerable<IElement> elements = document.QuerySelectorAll("li")
-            .Where(element => element.ParentElement != null
-                              && element.ParentElement.ClassName != null
+        IEnumerable<DiseasesClass> diseasesClasses = document
+            .QuerySelectorAll("li")
+            .Where(element => element.ParentElement is { ClassName: not null }
                               && element.ParentElement.ClassName.Contains("tm-list-additional-space list-codes"))
-            .ToArray();
-
-        IEnumerable<DiseasesClass> diseasesClasses = elements.Select(element =>
+            .Select(element =>
             {
-                string[] rangeComponents = element.Children[0].TextContent.Split('-');
-                CodesRange range = new(rangeComponents[0], rangeComponents[1]);
+                CodesRange range = ParseCodesRange(element);
 
-                if (element.Children[1] is not IHtmlAnchorElement anchorElement)
-                    throw new ArgumentException();
+                ParseTitle(element, out string title, out string url);
 
-                string title = anchorElement.TextContent;
-                string url = anchorElement.PathName;
+                int blocksCount = ParseBlocksCount(element);
 
-                const StringSplitOptions SplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
+                IList<string>? included = ParseDescription(element, 5);
+                IList<string>? excluded = ParseDescription(element, 7);
 
-                string[] blocksCountComponents = element.Children[3]
-                    .TextContent.Split(" ", SplitOptions);
-
-                int blocksCount = int.Parse(blocksCountComponents[1]);
-
-                string[] separator = ["\n", ":"];
-
-                IList<string>? included = element.Children.Length < 5
-                    ? null
-                    : element.Children[5]
-                        .TextContent.Split(separator, SplitOptions)
-                        .Skip(1)
-                        .ToList();
-
-                IList<string>? excluded = element.Children.Length < 7
-                    ? null
-                    : element.Children[7]
-                        .TextContent
-                        .Split(separator, SplitOptions)
-                        .Skip(1)
-                        .ToList();
-
-                return new DiseasesClass(range, title, blocksCount, url, included,
-                    excluded);
+                return new DiseasesClass(range, title, blocksCount, url, included, excluded);
             })
             .ToArray();
 
         return diseasesClasses;
     }
-}
 
-public class DiseasesClass
-{
-    public DiseasesClass(CodesRange range, string title, int blocksCount, string url, IList<string>? included = null, IList<string>? excluded = null)
+    private static CodesRange ParseCodesRange(IParentNode element)
     {
-        Range = range;
-        Title = title;
-        BlocksCount = blocksCount;
-        Url = url;
-        Included = included;
-        Excluded = excluded;
+        string[] rangeComponents = element.Children[0].TextContent.Split('-');
+        CodesRange range = new(rangeComponents[0], rangeComponents[1]);
+        return range;
     }
 
-    public string Url { get; }
-    public CodesRange Range { get; }
-    public string Title { get; }
-    public int BlocksCount { get; }
-    public IList<string>? Included { get; }
-    public IList<string>? Excluded { get; }
-}
-
-public record CodesRange
-{
-    public CodesRange(string start, string end)
+    private static void ParseTitle(IParentNode element, out string title, out string url)
     {
-        Start = start;
-        End = end;
+        if (element.Children[1] is not IHtmlAnchorElement anchorElement)
+            throw new ArgumentException(nameof(anchorElement));
+
+        title = anchorElement.TextContent;
+        url = anchorElement.PathName;
     }
 
-    public string Start { get; }
-    public string End { get; }
+    private static int ParseBlocksCount(IParentNode element)
+    {
+        string[] blocksCountComponents = element.Children[3]
+            .TextContent.Split(" ", SplitOptions);
+
+        int blocksCount = int.Parse(blocksCountComponents[1]);
+        return blocksCount;
+    }
+
+    private IList<string>? ParseDescription(IParentNode element, int index)
+    {
+        IList<string>? description = element.Children.Length < index
+            ? null
+            : element.Children[index]
+                .TextContent
+                .Replace("Исключены: ", string.Empty)
+                .Replace("Включены: ", string.Empty)
+                .Split(["\n"], SplitOptions)
+                .Skip(1)
+                .ToList();
+
+        return description;
+    }
 }

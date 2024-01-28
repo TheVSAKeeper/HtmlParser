@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AngleSharp.Html.Dom;
+﻿using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 
 namespace HtmlParser.ConsoleTest.Core;
@@ -45,21 +44,26 @@ internal class ParserWorker<T>(IParser<T> parser)
 
     private async void Worker()
     {
-        Debug.Assert(_parserSettings != null, nameof(_parserSettings) + " != null");
+        if (_parserSettings == null)
+            throw new ArgumentNullException(nameof(_parserSettings));
+
+        if (_loader == null)
+            throw new ArgumentNullException(nameof(_loader));
 
         for (int i = _parserSettings.StartPoint; i <= _parserSettings.EndPoint; i++)
         {
-            if (!IsActive)
+            if (IsActive == false)
             {
                 OnCompleted?.Invoke(this);
                 return;
             }
 
-            Debug.Assert(_loader != null, nameof(_loader) + " != null");
             string? source = await _loader.GetSourceByPageId(i);
             AngleSharp.Html.Parser.HtmlParser domParser = new();
 
-            Debug.Assert(source != null, nameof(source) + " != null");
+            if (source == null)
+                continue;
+
             IHtmlDocument document = await domParser.ParseDocumentAsync(source);
 
             T result = Parser.Parse(document);
