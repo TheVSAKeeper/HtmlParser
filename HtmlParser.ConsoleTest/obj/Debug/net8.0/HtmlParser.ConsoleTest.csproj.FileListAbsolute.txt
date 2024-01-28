@@ -1,0 +1,17 @@
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\bin\Debug\net8.0\HtmlParser.ConsoleTest.exe
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\bin\Debug\net8.0\HtmlParser.ConsoleTest.deps.json
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\bin\Debug\net8.0\HtmlParser.ConsoleTest.runtimeconfig.json
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\bin\Debug\net8.0\HtmlParser.ConsoleTest.dll
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\bin\Debug\net8.0\HtmlParser.ConsoleTest.pdb
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\bin\Debug\net8.0\AngleSharp.dll
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.csproj.AssemblyReference.cache
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.AssemblyInfoInputs.cache
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.AssemblyInfo.cs
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.csproj.CoreCompileInputs.cache
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.csproj.CopyComplete
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.dll
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\refint\HtmlParser.ConsoleTest.dll
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.pdb
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\HtmlParser.ConsoleTest.genruntimeconfig.cache
+C:\Sources\HtmlParser\HtmlParser.ConsoleTest\obj\Debug\net8.0\ref\HtmlParser.ConsoleTest.dll

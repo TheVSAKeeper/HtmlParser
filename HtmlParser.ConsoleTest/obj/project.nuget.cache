@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "7Gft+uYoMwdR0alI2ksVjxx3KUYeC79NdRTvm/8JMR8HCoExtd3yn0TspTRk58n0yIrxun+eymD5DmJIQE+pUA==",
+  "success": true,
+  "projectFilePath": "C:\\Sources\\HtmlParser\\HtmlParser.ConsoleTest\\HtmlParser.ConsoleTest.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Савелий\\.nuget\\packages\\anglesharp\\1.1.0\\anglesharp.1.1.0.nupkg.sha512",
+    "C:\\Users\\Савелий\\.nuget\\packages\\system.text.encoding.codepages\\8.0.0\\system.text.encoding.codepages.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
