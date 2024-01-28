@@ -22,7 +22,9 @@ internal class ParserWorker<T>(IParser<T> parser)
         set
         {
             _parserSettings = value;
-            _loader = new HtmlLoader(value);
+
+            if (value != null)
+                _loader = new HtmlLoader(value);
         }
     }
 
