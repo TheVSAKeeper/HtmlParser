@@ -18,8 +18,8 @@ internal static class Program
     {
         Parser = new ParserWorker<IEnumerable<DiseasesClass>>(new Mkb10Parser());
         DiseasesClasses = new ConcurrentBag<DiseasesClass>();
-        new object();
-        Path = @$"{Directory.GetCurrentDirectory()}\data\{DateTime.Now:[yyyy-MM-dd]HH-mm-ss}.json";
+        DateTime now = DateTime.Now;
+        Path = @$"{Directory.GetCurrentDirectory()}\data\results_{now:yyyyMMdd}_{now:HHmmss}.json";
 
         SerializerOptions = new JsonSerializerOptions
         {
@@ -27,11 +27,11 @@ internal static class Program
             WriteIndented = true
         };
 
-        Parser.OnCompleted += Parser_OnCompleted;
-        Parser.OnNewData += Parser_OnNewData;
+        Parser.OnCompleted += OnParserCompleted;
+        Parser.OnNewData += OnParserNewData;
     }
 
-    private static void Parser_OnNewData(object context, IEnumerable<DiseasesClass> diseasesClasses)
+    private static void OnParserNewData(object context, IEnumerable<DiseasesClass> diseasesClasses)
     {
         foreach (DiseasesClass diseasesClass in diseasesClasses)
         {
@@ -43,7 +43,7 @@ internal static class Program
         }
     }
 
-    private static void Parser_OnCompleted(object context)
+    private static void OnParserCompleted(object context)
     {
         Console.WriteLine("All works done!");
     }
